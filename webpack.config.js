@@ -1,31 +1,33 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-
 const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, 'public');
 
 module.exports = {
   devtool: 'eval',
+
   entry: [
     'webpack-hot-middleware/client',
     `${SRC_DIR}/index.jsx`,
   ],
+
   output: {
     filename: 'bundle.js',
     path: DIST_DIR,
     publicPath: '/public/',
   },
+
   module: {
     loaders: [
-      { test: /\.jsx?/,
+      { test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/ },
       { test: /\.scss?$/,
         loader: 'style!css!sass',
         include: path.join(__dirname, 'src', 'styles') },
-      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+      { test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: 'file' },
       { test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
@@ -38,6 +40,7 @@ module.exports = {
       },
     ],
   },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -45,6 +48,7 @@ module.exports = {
       template: path.join(__dirname, './public/index.html'),
     }),
   ],
+
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },

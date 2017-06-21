@@ -4,7 +4,7 @@ const middleware = require('./middleware');
 
 const webpackConfig = require('../webpack.config');
 
-const indexPath = path.join(__dirname, '/../public/index.html');
+const indexPath = path.join(__dirname, '../public/index.html');
 const publicPath = express.static(path.join(__dirname, '../public'));
 
 
@@ -16,14 +16,15 @@ app.use(middleware.bodyParser.json());
 if (process.env.NODE_ENV !== 'production') {
   const compiler = middleware.webpack(webpackConfig);
 
-  app.use(middleware.webpackDevMiddleware(compiler, {
+  app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath,
   }));
-  app.use(middleware.webpackHotMiddleware(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
 }
 
 // prod environment
 app.use('/public', publicPath);
+// app.use(publicPath);
 app.get('/', (_, res) => { res.sendFile(indexPath); });
 
 const allowCrossDomain = (req, res, next) => {

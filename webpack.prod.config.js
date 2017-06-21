@@ -1,16 +1,19 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const SRC_DIR = path.join(__dirname, '/client/src');
+const DIST_DIR = path.join(__dirname, 'public');
+
 module.exports = {
   devtool: 'source-map',
 
   entry: [
-    './src/index',
+    `${SRC_DIR}/index.jsx`,
   ],
 
   output: {
-    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+    path: DIST_DIR,
     publicPath: '/public/',
   },
 
@@ -31,13 +34,13 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.jsx?/,
+      { test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/ },
       { test: /\.scss?$/,
         loader: 'style!css!sass',
         include: path.join(__dirname, 'src', 'styles') },
-      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+      { test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: 'file' },
       { test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
@@ -49,5 +52,8 @@ module.exports = {
         ],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
   },
 };
