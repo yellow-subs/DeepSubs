@@ -1,19 +1,16 @@
 import React from 'react';
-import { Router, Route } from 'react-router'
-import { history } from '../redux/store';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import App from './App';
 import Chessboard from './Chessboard';
-import ListItem from './ListItem';
 
 const Routing = () => (
-  <Router history={history}>
-    <div>
+  <BrowserRouter>
+    <Switch>
       <Route exact path="/" component={App} />
-      <Route path="chessboard" component={Chessboard} />
-      <Route path="listItem" component={ListItem} />
-    </div>
-  </Router>
+      <Route path="/chessboard" component={Chessboard} />
+    </Switch>
+  </BrowserRouter>
 );
 
 export default Routing;
