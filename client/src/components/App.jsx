@@ -5,11 +5,8 @@ import { connect } from 'react-redux';
 import Chessboard from './Chessboard';
 import { startNewGame } from '../redux/actions/index';
 
-const App = (props) => (
+const App = props => (
   <div>
-    {/* <nav>
-      <li><Link to="/chessboard">GAME</Link></li>
-    </nav> */}
     <Chessboard />
     <button type="button" onClick={props.startNewGame}>Start Game</button>
   </div>
