@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
-app.get('/', (_, res) => { res.sendFile(indexPath); });
+app.get('/', (req, res) => { res.sendFile(indexPath); });
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

@@ -6,5 +6,5 @@ export const startNewGame = boardState => (dispatch) => {
 };
 
 export const updateBoardAsync = boardState => (dispatch) => {
-  dispatch(updateBoard(boardState))
-}
+  dispatch(updateBoard(boardState));
+};

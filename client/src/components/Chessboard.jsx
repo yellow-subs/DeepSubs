@@ -10,34 +10,37 @@ import styles from '../styles/styles';
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
-    this.engine = new Chess();
+    this.engine = null;
     this.onMovePiece = this.onMovePiece.bind(this);
-    this.state = {
-      board: this.props.boardState,
-    }
+    this.initBoard = this.initBoard.bind(this);
   }
 
   onMovePiece(piece, from, to) {
-    const chessObj = {
-      piece,
-      from,
-      to,
-    };
-    this.engine.move(chessObj);
-    const newBoard = this.engine.fen();
-    this.props.updateBoardAsync(newBoard);
+    this.engine.move({ piece, from, to });
+    this.props.updateBoardAsync(this.engine.fen());
+  }
+
+  initBoard() {
+    if (!this.engine) {
+      this.engine = new Chess();
+    } else {
+      this.engine.reset();
+    }
+    this.props.startNewGame();
   }
 
   render() {
     return (
-      <Board
-        fen={this.props.boardState}
-        // fen={this.state.board}
-        onMovePiece={this.onMovePiece}
-        squareSize={styles.board.size}
-        lightSquareColor={styles.board.light}
-        darkSquareColor={styles.board.dark}
-      />
+      <div>
+        <Board
+          fen={this.props.boardState}
+          onMovePiece={this.onMovePiece}
+          squareSize={styles.board.size}
+          lightSquareColor={styles.board.light}
+          darkSquareColor={styles.board.dark}
+        />
+        <button onClick={this.initBoard}>Start New Game</button>
+      </div>
     );
   }
 }
@@ -54,7 +57,11 @@ export default connect(mapStateToProps, { startNewGame, updateBoardAsync })(Ches
 
 Chessboard.propTypes = {
   boardState: propTypes.string,
+  updateBoardAsync: propTypes.func,
+  startNewGame: propTypes.func,
 };
 Chessboard.defaultProps = {
   boardState: '',
+  updateBoardAsync: propTypes.func,
+  startNewGame: propTypes.func,
 };

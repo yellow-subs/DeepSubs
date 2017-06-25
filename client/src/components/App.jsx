@@ -5,12 +5,9 @@ import { connect } from 'react-redux';
 import Chessboard from './Chessboard';
 import { startNewGame } from '../redux/actions/index';
 
-const initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-
 const App = props => (
   <div>
     <Chessboard />
-    <button type="button" onClick={() => props.startNewGame(initialFen)}>Start Game</button>
   </div>
 );
 
