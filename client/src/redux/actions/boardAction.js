@@ -1,8 +1,11 @@
-import { START_GAME } from './type';
+import { START_GAME, UPDATE_BOARD } from './type';
 
-export const newGame = board => ({
+export const newGame = boardState => ({
   type: START_GAME,
-  board,
+  boardState,
 });
 
-// thunk functions
+export const updateBoard = boardState => ({
+  type: UPDATE_BOARD,
+  boardState,
+});
