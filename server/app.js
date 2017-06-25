@@ -7,11 +7,7 @@ const webpackConfig = require('../webpack.config');
 const indexPath = path.join(__dirname, '../public/index.html');
 const publicPath = express.static(path.join(__dirname, '../public'));
 
-
 const app = express();
-
-app.use(middleware.bodyParser.urlencoded({ extended: false }));
-app.use(middleware.bodyParser.json());
 
 if (process.env.NODE_ENV !== 'production') {
   const compiler = middleware.webpack(webpackConfig);
@@ -21,6 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
+
+app.use(middleware.bodyParser.urlencoded({ extended: false }));
+app.use(middleware.bodyParser.json());
 
 // prod environment
 app.use('/public', publicPath);

@@ -3,6 +3,8 @@ import Board from 'react-chessdiagram';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
+import SocketIoClient from 'socket.io-client';
+import CONFIG from '../../../config/development.json';
 
 import { startNewGame, updateBoardAsync } from '../redux/actions/index';
 import styles from '../styles/styles';
@@ -10,14 +12,37 @@ import styles from '../styles/styles';
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      player: false,
+    };
     this.engine = null;
+    this.socket = SocketIoClient();
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
+    this.pickWhite = this.pickWhite.bind(this);
+    this.pickBlack = this.pickBlack.bind(this);
+    this.updateBoardListener = this.updateBoardListener.bind(this);
+    this.socket.on('board-update', this.updateBoardListener);
+    this.joinRoom = this.joinRoom.bind(this);
+  }
+
+  componentDidMount() {
+    this.socket.on('connect', () => {
+      console.log('socket connect on client', this.socket.id);
+    });
   }
 
   onMovePiece(piece, from, to) {
     this.engine.move({ piece, from, to });
-    this.props.updateBoardAsync(this.engine.fen());
+    const newBoard = this.engine.fen()
+    this.socket.emit('board-update', newBoard);
+    this.props.updateBoardAsync(newBoard);
+  }
+
+  updateBoardListener(newBoard) {
+    // listen to changes from the other side
+    this.engine.load(newBoard);
+    this.props.updateBoardAsync(newBoard);
   }
 
   initBoard() {
@@ -29,10 +54,23 @@ class Chessboard extends React.Component {
     this.props.startNewGame();
   }
 
+  pickWhite() {
+    this.setState({ player: false });
+  }
+
+  pickBlack() {
+    this.setState({ player: true });
+  }
+
+  joinRoom() {
+    this.socket.emit('join-room', 'room1');
+  }
+
   render() {
     return (
       <div>
         <Board
+          flip={this.state.player}
           fen={this.props.boardState}
           onMovePiece={this.onMovePiece}
           squareSize={styles.board.size}
@@ -40,6 +78,11 @@ class Chessboard extends React.Component {
           darkSquareColor={styles.board.dark}
         />
         <button onClick={this.initBoard}>Start New Game</button>
+        <button onClick={this.pickWhite}>Player W</button>
+        <button onClick={this.pickBlack}>Player B</button>
+        <li><button onClick={this.joinRoom}>room1</button></li>
+        <li><button>room2</button></li>
+        <li><button>room3</button></li>
       </div>
     );
   }
