@@ -1,10 +1,10 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
 import SocketIoClient from 'socket.io-client';
-import CONFIG from '../../../config/development.json';
 
 import { startNewGame, updateBoardAsync } from '../redux/actions/index';
 import styles from '../styles/styles';
@@ -81,7 +81,7 @@ class Chessboard extends React.Component {
         <button onClick={this.pickWhite}>Player W</button>
         <button onClick={this.pickBlack}>Player B</button>
         <li><button onClick={this.joinRoom}>room1</button></li>
-        <li><button>room2</button></li>
+        {/* <li><button><Redirect to="/login" />room2</button></li> */}
         <li><button>room3</button></li>
       </div>
     );
