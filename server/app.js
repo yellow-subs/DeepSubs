@@ -68,7 +68,6 @@ passport.use('local-login', new LocalStrategy(options, (req, username, password,
     if (!authHelpers.comparePass(password, user.password)) {
       return done(null, false);
     } else {
-      console.log('user in login', user)
       return done(null, user);
     }
   })
@@ -84,10 +83,7 @@ passport.use('local-signup', new LocalStrategy(options, (req, username, password
       return authHelpers.createUser(req);
     }
   })
-  .then((user) => {
-    console.log('user in local signup', user);
-    done(null, user.username);
-  })
+  .then(user => done(null, user[0]))
   .catch(err => done(err));
 }));
 
