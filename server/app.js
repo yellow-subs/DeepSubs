@@ -100,7 +100,7 @@ app.post('/signup', passport.authenticate('local-signup', {
 }));
 // WORKING
 
-
+// need fixing
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
