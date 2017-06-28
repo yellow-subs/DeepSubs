@@ -14,7 +14,7 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'postgres://qwkbtfjekorpaf:e64cb170751d11de363092ba23913dc127bca2f3a4e5a45677689d1992020731@ec2-23-21-220-48.compute-1.amazonaws.com:5432/ddbjt8j5mcbftq',
+      database: process.env.DATABASE_URL,
       user: 'postgres',
       password: 'valky1223',
     },
