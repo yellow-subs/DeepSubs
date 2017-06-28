@@ -1,13 +1,15 @@
 // Update with your config settings.
 
 module.exports = {
-  client: 'postgresql',
-  connection: {
-    database: 'deep_subs',
-    user: 'postgres',
-    password: 'valky1223',
-    host: 'localhost',
-    port: 5432,
+  development: {
+    client: 'postgresql',
+    connection: {
+      database: 'deep_subs',
+      user: 'postgres',
+      password: 'valky1223',
+      host: 'localhost',
+      port: 5432,
+    },
   },
   production: {
     client: 'postgresql',
