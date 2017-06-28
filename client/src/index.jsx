@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Routing from './components/Routing';
 
 ReactDOM.render(
-    <Routing />,
+  <Routing />,
   document.getElementById('root'),
 );
 
