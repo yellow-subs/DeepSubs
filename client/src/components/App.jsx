@@ -6,6 +6,7 @@ import Chatterbox from './Chatterbox';
 
 const App = () => (
   <div>
+    React-Chess with Phong
     <Chessboard />
     <Chatterbox />
   </div>
