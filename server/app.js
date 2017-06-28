@@ -31,6 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
+
 // WORKING
 const passport = require('passport');
 const knex = require('../postgres_db/index');
